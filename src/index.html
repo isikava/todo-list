@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/dark.css"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/shoelace.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="grid">
+        <div class="menu">
+          <sl-menu-item><strong>All Tasks</strong></sl-menu-item>
+          <sl-menu-item>Favorites</sl-menu-item>
+          <sl-menu-item>Groceries</sl-menu-item>
+          <sl-menu-item>Work</sl-menu-item>
+          <sl-menu-item>Study</sl-menu-item>
+          <sl-menu-item>Sports</sl-menu-item>
+          <sl-menu-item>+ New category</sl-menu-item>
+          <sl-divider></sl-divider>
+
+          <sl-menu-item>
+            <sl-icon slot="prefix" name="gear"></sl-icon>
+            Settings
+          </sl-menu-item>
+        </div>
+
+        <div class="container tasks-pane">
+          <h1>All Tasks</h1>
+          <sl-input placeholder="Add a new task" filled></sl-input>
+          <div class="tasks">
+            <ul>
+              <li>
+                <sl-checkbox checked>Buy Bananas for the pancakes</sl-checkbox
+                ><sl-badge variant="success" pill>Groceries</sl-badge>
+              </li>
+              <li>
+                <sl-checkbox checked>Go to the Gym</sl-checkbox
+                ><sl-badge variant="neutral" pill>Sports</sl-badge>
+              </li>
+              <li>
+                <sl-checkbox>Prepare roadmap for MVP</sl-checkbox
+                ><sl-badge variant="primary" pill>Work</sl-badge>
+              </li>
+              <li>
+                <sl-checkbox>Read chapter 3 from Math book</sl-checkbox
+                ><sl-badge variant="warning" pill>Study</sl-badge>
+              </li>
+              <li>
+                <sl-checkbox>Call Peter</sl-checkbox
+                ><sl-badge variant="primary" pill>Work</sl-badge>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

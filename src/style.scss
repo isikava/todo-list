@@ -1,0 +1,94 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  //   margin: 0;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+ul {
+  padding: 0;
+  list-style: none;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+/* <--reset */
+
+:root {
+  font-size: 30px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.grid {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.container {
+  max-width: 1200px;
+  padding-inline: 16px;
+  padding-inline: 38px;
+}
+
+.menu {
+  display: none;
+}
+
+sl-menu-item::part(label) {
+  padding-left: 55px;
+}
+
+sl-menu-item::part(base) {
+  font-size: 1.1rem;
+}
+
+.tasks-pane {
+  border-left: 1px solid var(--sl-panel-border-color);
+}
+
+@media (width > 48em) {
+  .grid {
+    grid-template-columns: 440px 1fr;
+  }
+  .menu {
+    display: block;
+  }
+}
