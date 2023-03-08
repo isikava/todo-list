@@ -3,9 +3,7 @@
 *::after {
   box-sizing: border-box;
 }
-* {
-  //   margin: 0;
-}
+
 html,
 body {
   height: 100%;
@@ -49,11 +47,23 @@ ul {
 
 :root {
   font-size: 30px;
+  --c-muted: var(--sl-input-placeholder-color);
+  --c-border: var(--sl-panel-border-color);
 }
+
+/* Media breakpoints*/
+$br-sm: 30em;
+$br-md: 48em;
+$br-lg: 62em;
+$br-xl: 75em;
 
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 1.6rem;
 }
 
 .grid {
@@ -70,21 +80,41 @@ body {
 
 .menu {
   display: none;
-}
+  padding-top: 70px;
 
-sl-menu-item::part(label) {
-  padding-left: 55px;
-}
+  sl-menu-item {
+    &::part(base) {
+      font-size: 1.1rem;
+      padding-left: 55px;
+    }
+  }
 
-sl-menu-item::part(base) {
-  font-size: 1.1rem;
+  sl-menu-item.new-category {
+    &::part(base) {
+      color: var(--c-muted);
+    }
+  }
 }
 
 .tasks-pane {
-  border-left: 1px solid var(--sl-panel-border-color);
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-left: 1px solid var(--c-border);
 }
 
-@media (width > 48em) {
+sl-input {
+  max-width: 700px;
+}
+
+.tasks {
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@media (width > $br-lg) {
   .grid {
     grid-template-columns: 440px 1fr;
   }
