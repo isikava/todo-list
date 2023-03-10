@@ -42,6 +42,12 @@ class TodoList {
     this.render();
   }
 
+  toggleTodo(index) {
+    console.log('toggle todo');
+    const todo = this.todos[index];
+    todo.toggleComplete();
+  }
+
   render() {
     console.table(this.todos);
   }
@@ -50,6 +56,10 @@ class TodoList {
 const todoList = new TodoList();
 todoList.addTodo(todo1);
 todoList.addTodo(todo2);
+
+const togTodo = new Todo('Toggle me');
+todoList.addTodo(togTodo);
+todoList.toggleTodo(2);
 
 // Retrieve an element from the DOM
 function qs(selector) {
@@ -151,3 +161,16 @@ function handleDelete(e) {
 }
 
 tasksEl.addEventListener('click', handleDelete);
+
+// Receive change event
+function handleToggleTodo(e) {
+  // Get change target element
+  const { id } = e.target.parentElement.dataset;
+  // Update Model with index
+  todoList.toggleTodo(id);
+
+  // Update View
+  displayTodos(todoList.todos);
+}
+
+tasksEl.addEventListener('sl-change', handleToggleTodo);
