@@ -102,16 +102,22 @@ h1 {
   border-left: 1px solid var(--c-border);
 }
 
-sl-input {
-  max-width: 700px;
-}
-
 .tasks {
   li {
     display: flex;
     align-items: center;
     gap: 10px;
   }
+}
+
+.addtodo-form {
+  display: flex;
+  max-width: 700px;
+  gap: 10px;
+}
+
+.addtodo {
+  flex: 1;
 }
 
 @media (width > $br-lg) {

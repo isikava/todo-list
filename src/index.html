@@ -38,7 +38,17 @@
 
         <div class="container tasks-pane">
           <h1>All Tasks</h1>
-          <sl-input id="addTodo" placeholder="Add a new task" filled></sl-input>
+          <form id="addTodoForm" class="addtodo-form">
+            <sl-input
+              id="addTodo"
+              class="addtodo"
+              placeholder="Add a new task"
+              filled
+              autofocus
+            ></sl-input>
+            <sl-button type="submit" variant="primary">Add</sl-button>
+          </form>
+
           <ul id="tasks" class="tasks">
             <li>
               <sl-checkbox checked>Buy Bananas for the pancakes</sl-checkbox
