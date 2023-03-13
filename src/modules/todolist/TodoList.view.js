@@ -1,16 +1,21 @@
+import TodoList from './TodoList';
 import { createElement, qs } from '../utils';
-import TodoListController from './TodoList.controller';
 
-const TodoListView = (model) => {
-  console.log('todolist view');
+const TodoListView = () => {
+  const model = new TodoList();
 
-  console.log(model);
-  const controller = TodoListController(model);
+  model.addTodo('Todo 1');
+  model.addTodo('Todo 2');
 
+  model.addTodo('Toggle me');
+  model.toggleTodo(2);
+
+  const form = qs('#addTodoForm');
+  const input = qs('#addTodo');
   // The visual representation of the todo list
   const tasksEl = qs('#tasks');
 
-  function displayTodos(todos = []) {
+  function renderTodos(todos = []) {
     // Delete all nodes
     tasksEl.innerHTML = '';
 
@@ -51,11 +56,46 @@ const TodoListView = (model) => {
     });
   }
 
-  tasksEl.addEventListener('click', controller.handleDelete);
-  tasksEl.addEventListener('sl-change', controller.handleToggleTodo);
+  function getTodoText() {
+    return input.value;
+  }
+
+  function resetInput() {
+    input.value = '';
+  }
+
+  function handleDelete(e) {
+    if (e.target.variant !== 'danger') return;
+
+    const { id } = e.target.parentElement.dataset;
+    renderTodos(model.removeTodo(id));
+  }
+
+  // Receive change event
+  function handleToggleTodo(e) {
+    // Get change target element index
+    const { id } = e.target.parentElement.dataset;
+    // Update Model with index
+    renderTodos(model.toggleTodo(id));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (getTodoText()) {
+      renderTodos(model.addTodo(getTodoText()));
+      resetInput();
+    }
+  }
+
+  form.addEventListener('submit', handleSubmit);
+  tasksEl.addEventListener('click', handleDelete);
+  tasksEl.addEventListener('sl-change', handleToggleTodo);
+
+  // Display initial todos
+  renderTodos(model.todos);
 
   return {
-    displayTodos,
+    renderTodos,
   };
 };
 

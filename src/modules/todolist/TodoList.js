@@ -1,34 +1,29 @@
-import TodoListView from './TodoList.view';
+import Todo from './Todo';
 
 export default class TodoList {
   constructor(todos = []) {
     this.todos = todos;
-    this.view = TodoListView(this);
-    console.log('view', this.view);
   }
 
-  addTodo(todo) {
-    if (!todo) return;
+  addTodo(text) {
+    if (!text) return;
+    const todo = new Todo(text);
 
     console.log('adding todo');
     this.todos.push(todo);
-    this.update();
+    return this.todos;
   }
 
   removeTodo(index) {
     console.log('deleting todo');
     this.todos.splice(index, 1);
-    this.update();
+    return this.todos;
   }
 
   toggleTodo(index) {
     console.log('toggle todo');
     const todo = this.todos[index];
     todo.toggleComplete();
-    this.update();
-  }
-
-  update() {
-    this.view.displayTodos(this.todos);
+    return this.todos;
   }
 }
