@@ -1,5 +1,8 @@
 // Retrieve an element from the DOM
-export function qs(selector) {
+export function qs(selector, scope) {
+  if (scope) {
+    return scope.querySelector(selector);
+  }
   return document.querySelector(selector);
 }
 

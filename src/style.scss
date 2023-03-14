@@ -97,14 +97,24 @@ h1 {
 
   sl-menu-item.active-menu {
     &::part(base) {
-      font-weight: 500;
-      background-color: var(--sl-color-neutral-100);
-      color: var(--sl-color-neutral-1000);
-      outline: none;
-      // background-color: var(--sl-color-primary-600);
-      // color: var(--sl-color-neutral-0);
+      font-weight: 600;
+      background-color: var(--sl-color-primary-600);
+      color: var(--sl-color-neutral-0);
       opacity: 1;
     }
+  }
+}
+
+sl-button.delete {
+  &::part(base) {
+    font-size: 20px;
+    --sl-input-height-medium: 50px;
+  }
+  &::part(label) {
+    padding: 0 20px;
+  }
+  sl-icon {
+    pointer-events: none;
   }
 }
 
@@ -115,10 +125,19 @@ h1 {
 }
 
 .tasks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sl-spacing-2x-small);
+
   li {
     display: flex;
     align-items: center;
+    max-width: 700px;
     gap: 10px;
+  }
+
+  sl-checkbox {
+    flex: 1;
   }
 }
 
