@@ -22,6 +22,16 @@
       src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/shoelace.js"
       defer
     ></script>
+    <style>
+      body {
+        opacity: 0;
+      }
+
+      body.ready {
+        opacity: 1;
+        transition: 0.25s opacity;
+      }
+    </style>
   </head>
   <body>
     <div id="root">
@@ -74,5 +84,16 @@
         </div>
       </div>
     </div>
+
+    <script type="module">
+      await Promise.allSettled([
+        customElements.whenDefined('sl-button'),
+        customElements.whenDefined('sl-checkbox'),
+      ]);
+
+      // Custom elements are registered now!
+      // Add the `ready` class so the UI fades in.
+      document.body.classList.add('ready');
+    </script>
   </body>
 </html>
