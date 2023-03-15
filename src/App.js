@@ -4,7 +4,7 @@ const App = () => {
   console.log('App init');
 
   let projects = [new Project('All Tasks'), new Project('Sports')];
-  let selected = 1;
+  let selected = 0;
 
   const getProjects = () => projects;
 
@@ -31,7 +31,7 @@ const App = () => {
 
   addProject('Study');
 
-  projects[selected].addTodo('Todo 1');
+  projects[0].addTodo('Todo 1');
 
   return {
     getProjects,

@@ -11,16 +11,20 @@ const View = (app) => {
   const input = qs('#addTodo');
 
   function renderProjects() {
-    menu.innerHTML = '';
-
+    // Get state
     const projects = app.getProjects();
     const selected = app.getSelected();
 
+    // Delete all nodes
+    menu.innerHTML = '';
+
+    // Populate projects list
     projects.forEach((project, index) => {
       const item = createElement('sl-menu-item');
       item.dataset.projectId = index;
       item.textContent = project.title;
 
+      // Set active menu element
       if (index == selected) {
         item.classList.add('active-menu');
       }
@@ -28,7 +32,10 @@ const View = (app) => {
     });
   }
 
-  function renderTodos(todos = []) {
+  function renderTodos() {
+    // Get state
+    const { todos } = app.selectedProject();
+
     // Delete all nodes
     tasksEl.innerHTML = '';
 
@@ -57,7 +64,7 @@ const View = (app) => {
       }
 
       const deleteButton = createElement('sl-button', 'delete');
-      deleteButton.innerHTML = `<sl-icon name="trash" label="Delete"></sl-icon>`;
+      deleteButton.innerHTML = `<sl-icon name="x-lg" label="Delete"></sl-icon>`;
       deleteButton.variant = 'danger';
       deleteButton.outline = true;
 
@@ -92,7 +99,7 @@ const View = (app) => {
     } else {
       tasksPane.style.display = '';
       h1.textContent = selectedProject.title;
-      renderTodos(selectedProject.todos);
+      renderTodos();
     }
   }
 
@@ -106,17 +113,17 @@ const View = (app) => {
       const selectedProject = app.selectedProject();
       selectedProject.addTodo(input.value);
       resetInput();
-      render();
+      renderTodos();
     }
   }
 
-  function handleDelete(e) {
+  function handleDeleteTodo(e) {
     if (e.target.variant !== 'danger') return;
 
     const { id } = e.target.parentElement.dataset;
     const selectedProject = app.selectedProject();
     selectedProject.removeTodo(id);
-    render();
+    renderTodos();
   }
 
   function handleToggleTodo(e) {
@@ -124,18 +131,20 @@ const View = (app) => {
 
     const selectedProject = app.selectedProject();
     selectedProject.toggleTodo(id);
+    renderTodos();
+  }
+
+  function handleMenuChange(e) {
+    if (!e.target.dataset.projectId) return;
+
+    app.setSelected(+e.target.dataset.projectId);
     render();
   }
 
   // Event listeners
-  menu.addEventListener('click', (e) => {
-    if (e.target.dataset.projectId) {
-      app.setSelected(+e.target.dataset.projectId);
-      render();
-    }
-  });
+  menu.addEventListener('click', handleMenuChange);
   form.addEventListener('submit', handleSubmit);
-  tasksEl.addEventListener('click', handleDelete);
+  tasksEl.addEventListener('click', handleDeleteTodo);
   tasksEl.addEventListener('sl-change', handleToggleTodo);
 
   // Initial render
