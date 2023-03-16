@@ -1,8 +1,12 @@
-import { qs, createElement } from './dom';
+import {
+  qs,
+  createElement,
+  createMenuItem,
+  createTodoItem,
+  createTodoCount,
+} from './dom';
 
 const View = (app) => {
-  console.log('app view');
-
   const menu = qs('#menu');
   const tasksPane = qs('#tasksPane');
   const tasksEl = qs('#tasks');
@@ -20,16 +24,11 @@ const View = (app) => {
 
     // Populate projects list
     projects.forEach((project, index) => {
-      const item = createElement('sl-menu-item');
-      item.dataset.projectId = index;
-      item.textContent = project.title;
-
-      // Set active menu element
-      if (index == selected) {
-        item.classList.add('active-menu');
-      }
+      const item = createMenuItem(index, project.title, selected);
       menu.append(item);
     });
+
+    input.focus();
   }
 
   function renderTodos() {
@@ -49,43 +48,19 @@ const View = (app) => {
 
     // Create todo item nodes for each todo in state
     todos.forEach((todo, index) => {
-      const li = createElement('li');
-      li.dataset.id = index;
-
-      const checkbox = createElement('sl-checkbox');
-      checkbox.checked = todo.complete;
-
-      if (todo.complete) {
-        const strike = createElement('s');
-        strike.textContent = todo.title;
-        checkbox.append(strike);
-      } else {
-        checkbox.textContent = todo.title;
-      }
-
-      const deleteButton = createElement('sl-button', 'delete');
-      deleteButton.innerHTML = `<sl-icon name="x-lg" label="Delete"></sl-icon>`;
-      deleteButton.variant = 'danger';
-      deleteButton.outline = true;
-
-      li.append(checkbox, deleteButton);
+      const { title, complete } = todo;
+      const li = createTodoItem(index, title, complete);
 
       // Append nodes to the todo list
       tasksEl.append(li);
     });
 
     // Add todos count
-    const count = createCount(todos);
-    tasksEl.append(count);
-  }
-
-  function createCount(todos = []) {
     const incompleteTodosCount = todos.filter((todo) => !todo.complete).length;
-    const p = createElement('p');
-    const todoString = incompleteTodosCount === 1 ? 'task' : 'tasks';
-    p.innerText = `${incompleteTodosCount} ${todoString} remaining`;
+    const count = createTodoCount(incompleteTodosCount);
+    tasksEl.append(count);
 
-    return p;
+    input.focus();
   }
 
   function render() {
@@ -118,7 +93,7 @@ const View = (app) => {
   }
 
   function handleDeleteTodo(e) {
-    if (e.target.variant !== 'danger') return;
+    if (!e.target.classList.contains('delete')) return;
 
     const { id } = e.target.parentElement.dataset;
     const selectedProject = app.selectedProject();

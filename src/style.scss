@@ -66,6 +66,10 @@ h1 {
   font-size: 1.6rem;
 }
 
+p {
+  margin: 0;
+}
+
 .grid {
   min-height: 100vh;
   display: grid;
@@ -134,10 +138,20 @@ sl-button.delete {
     align-items: center;
     max-width: 700px;
     gap: 10px;
+
+    &:last-of-type {
+      margin-bottom: 15px;
+    }
   }
 
   sl-checkbox {
     flex: 1;
+  }
+}
+
+sl-checkbox[checked] {
+  &::part(label) {
+    text-decoration: line-through;
   }
 }
 
