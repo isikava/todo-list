@@ -70,6 +70,10 @@ p {
   margin: 0;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .grid {
   min-height: 100vh;
   display: grid;
@@ -85,19 +89,7 @@ p {
 .menu {
   display: none;
   padding-top: 70px;
-
-  sl-menu-item {
-    &::part(base) {
-      font-size: 1.1rem;
-      padding-left: 55px;
-    }
-  }
-
-  sl-menu-item.new-category {
-    &::part(base) {
-      color: var(--c-muted);
-    }
-  }
+  padding-left: 55px;
 
   sl-menu-item.active-menu {
     &::part(base) {
@@ -122,13 +114,13 @@ sl-button.delete {
   }
 }
 
-.tasks-pane {
+.todos-pane {
   padding-top: 40px;
   padding-bottom: 40px;
   border-left: 1px solid var(--c-border);
 }
 
-.tasks {
+.todos {
   display: flex;
   flex-direction: column;
   gap: var(--sl-spacing-2x-small);
@@ -163,6 +155,27 @@ sl-checkbox[checked] {
 
 .addtodo {
   flex: 1;
+}
+
+.addproject-form {
+  // width of sl-menu-item span part="checked-icon"
+  padding-left: 1.5rem;
+
+  sl-input {
+    &::part(base) {
+      border: none;
+      box-shadow: none;
+      background-color: inherit;
+    }
+
+    &::part(input) {
+      padding: 0 10px;
+    }
+
+    sl-icon {
+      margin: 0;
+    }
+  }
 }
 
 @media (width > $br-lg) {

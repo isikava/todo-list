@@ -6,26 +6,31 @@ import {
   createTodoCount,
 } from './dom';
 
-const View = (app) => {
-  const menu = qs('#menu');
-  const tasksPane = qs('#tasksPane');
-  const tasksEl = qs('#tasks');
-  const h1 = qs('h1', tasksPane);
+const View = (App) => {
+  const menuList = qs('#menuList');
+  const todosPane = qs('#todosPane');
+  const todosEl = qs('#todos');
+  const h1 = qs('h1', todosPane);
   const form = qs('#addTodoForm');
   const input = qs('#addTodo');
+  const addProjectForm = qs('#addProjectForm');
+  const addProjectInput = qs('#addProject');
+
+  // State of the App
+  let projects = App.getProjects();
+  let selected = 0;
 
   function renderProjects() {
     // Get state
-    const projects = app.getProjects();
-    const selected = app.getSelected();
+    projects = App.getProjects();
 
     // Delete all nodes
-    menu.innerHTML = '';
+    menuList.innerHTML = '';
 
     // Populate projects list
     projects.forEach((project, index) => {
       const item = createMenuItem(index, project.title, selected);
-      menu.append(item);
+      menuList.append(item);
     });
 
     input.focus();
@@ -33,16 +38,16 @@ const View = (app) => {
 
   function renderTodos() {
     // Get state
-    const { todos } = app.selectedProject();
+    const { todos } = projects[selected];
 
     // Delete all nodes
-    tasksEl.innerHTML = '';
+    todosEl.innerHTML = '';
 
     // Show default message
     if (todos.length === 0) {
       const p = createElement('p');
       p.textContent = 'Nothing to do! Add a task?';
-      tasksEl.append(p);
+      todosEl.append(p);
       return;
     }
 
@@ -52,27 +57,28 @@ const View = (app) => {
       const li = createTodoItem(index, title, complete);
 
       // Append nodes to the todo list
-      tasksEl.append(li);
+      todosEl.append(li);
     });
 
     // Add todos count
     const incompleteTodosCount = todos.filter((todo) => !todo.complete).length;
     const count = createTodoCount(incompleteTodosCount);
-    tasksEl.append(count);
+    todosEl.append(count);
 
     input.focus();
   }
 
+  // Render App
   function render() {
+    projects = App.getProjects();
+    const selectedProject = projects[selected];
+
     renderProjects();
 
-    const selected = app.getSelected();
-    const selectedProject = app.selectedProject();
-
     if (selected === null) {
-      tasksPane.style.display = 'none';
+      todosPane.style.display = 'none';
     } else {
-      tasksPane.style.display = '';
+      todosPane.style.display = '';
       h1.textContent = selectedProject.title;
       renderTodos();
     }
@@ -82,45 +88,66 @@ const View = (app) => {
     input.value = '';
   }
 
-  function handleSubmit(e) {
+  // Handlers
+  function handleAddTodo(e) {
     e.preventDefault();
-    if (input.value) {
-      const selectedProject = app.selectedProject();
-      selectedProject.addTodo(input.value);
-      resetInput();
-      renderTodos();
+    const { value } = input;
+    if (value.trim() === '') {
+      return;
     }
+
+    const selectedProject = projects[selected];
+    selectedProject.addTodo(value);
+    resetInput();
+    renderTodos();
   }
 
   function handleDeleteTodo(e) {
-    if (!e.target.classList.contains('delete')) return;
+    if (!e.target.closest('.delete')) {
+      return;
+    }
 
     const { id } = e.target.parentElement.dataset;
-    const selectedProject = app.selectedProject();
+    const selectedProject = projects[selected];
     selectedProject.removeTodo(id);
     renderTodos();
   }
 
   function handleToggleTodo(e) {
-    const { id } = e.target.parentElement.dataset;
-
-    const selectedProject = app.selectedProject();
+    const { id } = e.target.closest('li').dataset;
+    const selectedProject = projects[selected];
     selectedProject.toggleTodo(id);
     renderTodos();
   }
 
   function handleMenuChange(e) {
-    if (!e.target.dataset.projectId) return;
+    if (!e.target.dataset.projectId) {
+      return;
+    }
 
-    app.setSelected(+e.target.dataset.projectId);
+    selected = +e.target.dataset.projectId;
     render();
   }
 
+  function handleAddProject(e) {
+    e.preventDefault();
+    const { value } = addProjectInput;
+    if (value.trim() === '') {
+      return;
+    }
+
+    // Add project and select last project
+    selected = App.addProject(value).length - 1;
+    render();
+    addProjectInput.value = '';
+  }
+
   // Event listeners
-  menu.addEventListener('click', handleMenuChange);
-  form.addEventListener('submit', handleSubmit);
-  tasksEl.addEventListener('click', handleDeleteTodo);
-  tasksEl.addEventListener('sl-change', handleToggleTodo);
+  menuList.addEventListener('click', handleMenuChange);
+  addProjectForm.addEventListener('submit', handleAddProject);
+  form.addEventListener('submit', handleAddTodo);
+  todosEl.addEventListener('click', handleDeleteTodo);
+  todosEl.addEventListener('sl-change', handleToggleTodo);
 
   // Initial render
   render();

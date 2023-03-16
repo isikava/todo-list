@@ -36,30 +36,45 @@
   <body>
     <div id="root">
       <div class="grid">
-        <div id="menu" class="menu">
-          <sl-menu-item><strong>All Tasks</strong></sl-menu-item>
-          <sl-menu-item>Favorites</sl-menu-item>
-          <sl-menu-item>Groceries</sl-menu-item>
-          <sl-menu-item>Work</sl-menu-item>
-          <sl-menu-item>Study</sl-menu-item>
-          <sl-menu-item>Sports</sl-menu-item>
-          <sl-menu-item class="new-category">+ New category</sl-menu-item>
+        <div class="menu">
+          <div id="menuList">
+            <sl-menu-item><strong>All Tasks</strong></sl-menu-item>
+            <sl-menu-item>Favorites</sl-menu-item>
+            <sl-menu-item>Groceries</sl-menu-item>
+            <sl-menu-item>Work</sl-menu-item>
+            <sl-menu-item>Study</sl-menu-item>
+            <sl-menu-item>Sports</sl-menu-item>
+          </div>
+          <form id="addProjectForm" class="addproject-form">
+            <sl-input
+              id="addProject"
+              class="addproject"
+              placeholder="New category"
+              autocomplete="off"
+            >
+              <sl-icon name="plus-lg" slot="prefix"></sl-icon
+            ></sl-input>
+            <sl-button type="submit" variant="primary" class="hidden"
+              >Add</sl-button
+            >
+          </form>
         </div>
 
-        <div id="tasksPane" class="container tasks-pane">
+        <div id="todosPane" class="container todos-pane">
           <h1>All Tasks</h1>
           <form id="addTodoForm" class="addtodo-form">
             <sl-input
               id="addTodo"
               class="addtodo"
               placeholder="Add a new task"
+              autocomplete="off"
               filled
               autofocus
             ></sl-input>
             <sl-button type="submit" variant="primary">Add</sl-button>
           </form>
 
-          <ul id="tasks" class="tasks">
+          <ul id="todos" class="todos">
             <li>
               <sl-checkbox checked>Buy Bananas for the pancakes</sl-checkbox
               ><sl-badge variant="success" pill>Groceries</sl-badge>
