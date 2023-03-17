@@ -29,7 +29,12 @@ const View = (App) => {
 
     // Populate projects list
     projects.forEach((project, index) => {
-      const item = createMenuItem(index, project.title, selected);
+      const item = createMenuItem(
+        index,
+        project.title,
+        selected,
+        project.todos.length
+      );
       menuList.append(item);
     });
 
@@ -55,6 +60,9 @@ const View = (App) => {
     todos.forEach((todo, index) => {
       const { title, complete } = todo;
       const li = createTodoItem(index, title, complete);
+      // const span = createElement('span');
+      // span.textContent = projects[selected].title;
+      // li.append(span);
 
       // Append nodes to the todo list
       todosEl.append(li);
@@ -99,7 +107,7 @@ const View = (App) => {
     const selectedProject = projects[selected];
     selectedProject.addTodo(value);
     resetInput();
-    renderTodos();
+    render();
   }
 
   function handleDeleteTodo(e) {
@@ -110,7 +118,7 @@ const View = (App) => {
     const { id } = e.target.parentElement.dataset;
     const selectedProject = projects[selected];
     selectedProject.removeTodo(id);
-    renderTodos();
+    render();
   }
 
   function handleToggleTodo(e) {

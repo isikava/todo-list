@@ -15,7 +15,7 @@ export function createElement(tag, className) {
 }
 
 // Create View components
-export function createMenuItem(index, title, selected) {
+export function createMenuItem(index, title, selected, count) {
   const item = createElement('sl-menu-item');
   item.dataset.projectId = index;
   item.textContent = title;
@@ -23,6 +23,14 @@ export function createMenuItem(index, title, selected) {
   // Set active menu element
   if (index == selected) {
     item.classList.add('active-menu');
+  }
+
+  // Add count todos badge
+  if (count > 0) {
+    item.insertAdjacentHTML(
+      'beforeend',
+      `<sl-badge slot="suffix" variant="neutral" pill>${count}</sl-badge>`
+    );
   }
 
   return item;
