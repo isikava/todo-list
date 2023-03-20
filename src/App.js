@@ -1,29 +1,37 @@
-import Project from './domain/Project';
+const projects = {
+  all: 'all',
+  sports: 'sports',
+  study: 'study',
+};
 
-const App = () => {
-  let projects = [new Project('All Tasks'), new Project('Sports')];
+const App = (TodoList) => {
+  const $root = document.querySelector('#root');
 
-  const getProjects = () => projects;
+  TodoList.addTodo('Todo 1', 'new');
+  TodoList.addTodo('Todo 2', 'new');
+  TodoList.addTodo('Todo 3', projects.sports);
+  TodoList.addTodo('Todo 4', projects.study);
+  // TodoList.removeTodo(3);
+  TodoList.toggleTodo(0);
+  // TodoList.removeCompleted();
 
-  const addProject = (title) => {
-    const project = new Project(title);
-    projects = [...projects, project];
-    return projects;
-  };
+  function renderTodos() {
+    console.log(TodoList.todos);
+  }
 
-  const removeProject = (index) => {
-    projects = projects.filter((_, i) => i !== index);
-    return projects;
-  };
+  function renderProjects() {
+    console.log(TodoList.projects);
+  }
 
-  addProject('Study');
+  function render() {
+    renderProjects();
+    renderTodos();
+  }
 
-  projects[0].addTodo('Todo 1');
+  render();
 
   return {
-    getProjects,
-    addProject,
-    removeProject,
+    render,
   };
 };
 

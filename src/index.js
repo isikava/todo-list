@@ -1,10 +1,6 @@
-import './style.scss';
+import TodoList from './domain/TodoList';
 import App from './App';
-import View from './View';
+import './style.scss';
 
-const app = App();
-app.addProject('Home');
-
-const view = View(app);
-app.addProject();
-view.render();
+const todoList = new TodoList();
+const app = App(todoList);
