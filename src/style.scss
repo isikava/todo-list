@@ -49,6 +49,10 @@ ul {
   font-size: 30px;
   --c-muted: var(--sl-input-placeholder-color);
   --c-border: var(--sl-panel-border-color);
+  --c-groceries: #27ae60;
+  --c-sports: #9b51e0;
+  --c-work: #2f80ed;
+  --c-study: #f2994a;
 }
 
 /* Media breakpoints*/
@@ -129,21 +133,68 @@ sl-button.delete {
     display: flex;
     align-items: center;
     max-width: 700px;
-    gap: 10px;
+    gap: 16px;
 
     &:last-of-type {
       margin-bottom: 15px;
     }
+
+    &:hover {
+      .delete {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
   }
 
   sl-checkbox {
-    flex: 1;
+    &::part(label) {
+      max-width: 450px;
+      overflow-wrap: break-word;
+    }
+  }
+
+  .delete {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.1s ease-out;
+    margin-left: auto;
   }
 }
 
 sl-checkbox[checked] {
   &::part(label) {
     text-decoration: line-through;
+  }
+}
+
+sl-badge[data-project] {
+  &::part(base) {
+    background-color: var(--sl-color-neutral-600);
+  }
+}
+
+sl-badge[data-project='Sports'] {
+  &::part(base) {
+    background-color: var(--c-sports);
+  }
+}
+
+sl-badge[data-project='Work'] {
+  &::part(base) {
+    background-color: var(--c-work);
+  }
+}
+
+sl-badge[data-project='Study'] {
+  &::part(base) {
+    background-color: var(--c-study);
+  }
+}
+
+sl-badge[data-project='Groceries'] {
+  &::part(base) {
+    background-color: var(--c-groceries);
   }
 }
 

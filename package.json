@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "nanoid": "^4.0.1"
+  },
   "devDependencies": {
     "css-loader": "^6.7.3",
     "eslint": "^8.35.0",

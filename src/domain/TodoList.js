@@ -9,30 +9,35 @@ export default class TodoList {
   get projects() {
     return this.todos.reduce(
       (values, todo) => {
-        if (!values.includes(todo.project)) {
+        if (!values.includes(todo.project) && todo.project !== null) {
           values.push(todo.project);
         }
         return values;
       },
-      ['all']
+      // Default projects can not be deleted
+      ['All Tasks', 'Work', 'Study', 'Sports', 'Groceries']
     );
   }
 
-  addTodo(text, project) {
+  addTodo(id, text, project) {
     if (!text) return;
 
-    const todo = new Todo(text, project);
+    const todo = new Todo(id, text, project);
     this.todos.push(todo);
     return this.todos;
   }
 
-  removeTodo(index) {
-    this.todos.splice(index, 1);
+  find(id) {
+    return this.todos.find((todo) => todo.id === id);
+  }
+
+  removeTodo(id) {
+    this.todos = this.todos.filter((todo) => todo.id !== id);
     return this.todos;
   }
 
-  toggleTodo(index) {
-    const todo = this.todos[index];
+  toggleTodo(id) {
+    const todo = this.find(id);
     todo.toggleComplete();
     return this.todos;
   }
@@ -41,7 +46,7 @@ export default class TodoList {
     this.todos = this.todos.filter((todo) => !todo.complete);
   }
 
-  getProjectTodos(project) {
+  filterByProject(project) {
     return this.todos.filter((todo) => todo.project === project);
   }
 }

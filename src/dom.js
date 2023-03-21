@@ -1,4 +1,6 @@
-// Retrieve an element from the DOM
+/** querySelector wrapper
+ * @returns { Node } an element from the DOM
+ */
 export function qs(selector, scope) {
   if (scope) {
     return scope.querySelector(selector);
@@ -6,7 +8,9 @@ export function qs(selector, scope) {
   return document.querySelector(selector);
 }
 
-// Create an element with an optional CSS class
+/** Create an element with an optional CSS class
+ * @returns { Node } an element
+ */
 export function createElement(tag, className) {
   const element = document.createElement(tag);
   if (className) element.classList.add(className);
@@ -15,13 +19,12 @@ export function createElement(tag, className) {
 }
 
 // Create View components
-export function createMenuItem(index, title, selected, count) {
+export function createMenuItem(title, selected, count) {
   const item = createElement('sl-menu-item');
-  item.dataset.projectId = index;
   item.textContent = title;
 
   // Set active menu element
-  if (index == selected) {
+  if (title == selected) {
     item.classList.add('active-menu');
   }
 
@@ -36,18 +39,30 @@ export function createMenuItem(index, title, selected, count) {
   return item;
 }
 
-export function createTodoItem(index, title, complete) {
+export function createTodoItem(title, complete, project) {
   const li = createElement('li');
-  li.dataset.id = index;
 
   const checkbox = createElement('sl-checkbox');
   checkbox.checked = complete;
   checkbox.textContent = title;
 
-  const deleteButton = createElement('sl-button', 'delete');
-  deleteButton.innerHTML = `<sl-icon name="x-lg" label="Delete"></sl-icon>`;
+  li.append(checkbox);
 
-  li.append(checkbox, deleteButton);
+  // Add badge
+  if (project) {
+    li.insertAdjacentHTML(
+      'beforeend',
+      `<sl-badge slot="suffix" data-project="${project}" pill>${project}</sl-badge>`
+    );
+  }
+
+  // Delete button
+  li.insertAdjacentHTML(
+    'beforeend',
+    `<sl-button class="delete">
+       <sl-icon name="x-lg" label="Delete"></sl-icon>
+     </sl-button>`
+  );
 
   return li;
 }
