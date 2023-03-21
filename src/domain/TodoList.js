@@ -3,11 +3,7 @@ import Todo from './Todo';
 export default class TodoList {
   constructor(todos = []) {
     this.todos = todos;
-  }
-
-  // Get array of unique projects
-  get projects() {
-    return this.todos.reduce(
+    this.projects = this.todos.reduce(
       (values, todo) => {
         if (!values.includes(todo.project) && todo.project !== null) {
           values.push(todo.project);
@@ -19,12 +15,15 @@ export default class TodoList {
     );
   }
 
+  addProject(title) {
+    this.projects.push(title);
+  }
+
   addTodo(id, text, project) {
     if (!text) return;
 
     const todo = new Todo(id, text, project);
     this.todos.push(todo);
-    return this.todos;
   }
 
   find(id) {
@@ -33,13 +32,11 @@ export default class TodoList {
 
   removeTodo(id) {
     this.todos = this.todos.filter((todo) => todo.id !== id);
-    return this.todos;
   }
 
   toggleTodo(id) {
     const todo = this.find(id);
     todo.toggleComplete();
-    return this.todos;
   }
 
   removeCompleted() {

@@ -27,6 +27,7 @@ const App = (TodoList) => {
   TodoList.addTodo(nanoid(10), 'New 2', 'new');
   TodoList.addTodo(nanoid(10), 'Sport 1', projects.sports);
   TodoList.addTodo(nanoid(10), 'Study 1', projects.study);
+  TodoList.addProject('TEST');
 
   // Selected project
   let selected = projects.all;
@@ -163,7 +164,8 @@ const App = (TodoList) => {
     }
 
     // Add project and select last project
-    // selected = App.addProject(value).length - 1;
+    TodoList.addProject(value);
+    selected = value;
     render();
     $addProjectInput.value = '';
   }
