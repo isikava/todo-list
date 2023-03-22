@@ -22,12 +22,14 @@ const App = (TodoList) => {
   const $input = qs('#addTodo');
   const $addProjectForm = qs('#addProjectForm');
   const $addProjectInput = qs('#addProject');
+  const $menu = document.querySelector('.menu');
+  const $menuBtn = document.querySelector('#menuBtn');
+  const $closeMenu = document.querySelector('#closeMenu');
 
   TodoList.addTodo(nanoid(10), 'New 1', 'new');
   TodoList.addTodo(nanoid(10), 'New 2', 'new');
   TodoList.addTodo(nanoid(10), 'Sport 1', projects.sports);
   TodoList.addTodo(nanoid(10), 'Study 1', projects.study);
-  TodoList.addProject('TEST');
 
   // Selected project
   let selected = projects.all;
@@ -121,6 +123,7 @@ const App = (TodoList) => {
     }
 
     selected = e.target.dataset.projectId;
+    closeMenu();
     render();
   }
 
@@ -166,9 +169,21 @@ const App = (TodoList) => {
     // Add project and select last project
     TodoList.addProject(value);
     selected = value;
-    render();
     $addProjectInput.value = '';
+    closeMenu();
+    render();
   }
+
+  function toggleMenu() {
+    $menu.classList.toggle('active-menu');
+  }
+
+  function closeMenu() {
+    $menu.classList.remove('active-menu');
+  }
+
+  $menuBtn.onclick = toggleMenu;
+  $closeMenu.onclick = closeMenu;
 
   // Event listeners
   $menuList.addEventListener('click', handleMenuChange);

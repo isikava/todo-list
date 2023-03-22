@@ -25,7 +25,7 @@ export function createMenuItem(title, selected, count) {
 
   // Set active menu element
   if (title == selected) {
-    item.classList.add('active-menu');
+    item.classList.add('active-menu-item');
   }
 
   // Add count todos badge

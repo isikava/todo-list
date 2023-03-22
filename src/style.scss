@@ -46,7 +46,7 @@ ul {
 /* <--reset */
 
 :root {
-  font-size: 30px;
+  font-size: 24px;
   --c-muted: var(--sl-input-placeholder-color);
   --c-border: var(--sl-panel-border-color);
   --c-groceries: #27ae60;
@@ -81,21 +81,43 @@ p {
 .grid {
   min-height: 100vh;
   display: grid;
+  grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;
+}
+
+.wrapper {
+  display: flex;
 }
 
 .container {
   max-width: 1200px;
   padding-inline: 16px;
-  padding-inline: 38px;
+}
+
+.header {
+  sl-icon-button {
+    font-size: 1.5rem;
+  }
 }
 
 .menu {
-  display: none;
-  padding-top: 70px;
-  padding-left: 55px;
+  position: fixed;
+  height: calc(100% - 60px);
+  width: 0;
+  z-index: 1000;
+  top: 60px;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: width 0.5s;
 
-  sl-menu-item.active-menu {
+  .close-menu {
+    position: absolute;
+    top: 0;
+    right: 15px;
+  }
+
+  sl-menu-item.active-menu-item {
     &::part(base) {
       font-weight: 600;
       background-color: var(--sl-color-primary-600);
@@ -103,6 +125,15 @@ p {
       opacity: 1;
     }
   }
+}
+
+.menu.active-menu {
+  width: 250px;
+  border-right: 1px solid var(--c-border);
+}
+
+.menu-inner {
+  padding-top: 50px;
 }
 
 sl-button.delete {
@@ -119,21 +150,21 @@ sl-button.delete {
 }
 
 .todos-pane {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  border-left: 1px solid var(--c-border);
+  flex: 1;
+  padding-bottom: 20px;
 }
 
 .todos {
   display: flex;
   flex-direction: column;
-  gap: var(--sl-spacing-2x-small);
+  gap: var(--sl-spacing-x-small);
 
   li {
     display: flex;
     align-items: center;
     max-width: 700px;
     gap: 16px;
+    gap: var(--sl-spacing-small);
 
     &:last-of-type {
       margin-bottom: 15px;
@@ -199,13 +230,9 @@ sl-badge[data-project='Groceries'] {
 }
 
 .addtodo-form {
-  display: flex;
-  max-width: 700px;
-  gap: 10px;
-}
-
-.addtodo {
-  flex: 1;
+  sl-button {
+    display: none;
+  }
 }
 
 .addproject-form {
@@ -230,10 +257,51 @@ sl-badge[data-project='Groceries'] {
 }
 
 @media (width > $br-lg) {
-  .grid {
-    grid-template-columns: 440px 1fr;
+  :root {
+    font-size: 30px;
   }
+
+  .container {
+    padding-inline: 38px;
+  }
+
+  .header {
+    padding-left: 16px;
+  }
+
   .menu {
-    display: block;
+    position: relative;
+    height: 100%;
+    width: 0;
+    top: 0;
+    left: 0;
+    border-right: 1px solid var(--c-border);
+
+    .close-menu {
+      display: none;
+    }
+  }
+
+  .menu.active-menu {
+    width: 440px;
+  }
+
+  .menu-inner {
+    padding-top: 100px;
+    padding-left: 100px;
+  }
+
+  .addtodo-form {
+    display: flex;
+    max-width: 700px;
+    gap: 10px;
+
+    sl-input {
+      flex: 1;
+    }
+
+    sl-button {
+      display: block;
+    }
   }
 }
