@@ -123,8 +123,12 @@ const App = (TodoList) => {
     }
 
     selected = e.target.dataset.projectId;
-    closeMenu();
+
     render();
+    // Close menu on smaller screens
+    if (window.innerWidth < 960) {
+      closeMenu();
+    }
   }
 
   function handleAddTodo(e) {
@@ -170,8 +174,11 @@ const App = (TodoList) => {
     TodoList.addProject(value);
     selected = value;
     $addProjectInput.value = '';
-    closeMenu();
     render();
+    // Close menu on smaller screens
+    if (window.innerWidth < 960) {
+      closeMenu();
+    }
   }
 
   function toggleMenu() {
