@@ -1,11 +1,22 @@
 import Todo from './Todo';
 
 export default class TodoList {
-  constructor(todos = []) {
-    this.todos = todos;
+  // Initialize with an optional array of data
+  constructor(dataArr) {
+    if (dataArr) {
+      // map it into an array of Todo objects
+      this.todos = dataArr.map((todo) => new Todo(todo));
+    } else {
+      this.todos = [];
+    }
+
     this.projects = this.todos.reduce(
       (values, todo) => {
-        if (!values.includes(todo.project) && todo.project !== null) {
+        if (
+          !values.includes(todo.project) &&
+          todo.project !== null &&
+          todo.project !== undefined
+        ) {
           values.push(todo.project);
         }
         return values;
@@ -19,10 +30,10 @@ export default class TodoList {
     this.projects.push(title);
   }
 
-  addTodo(id, text, project) {
-    if (!text) return;
+  addTodo(id, title, project) {
+    if (!title) return;
 
-    const todo = new Todo(id, text, project);
+    const todo = new Todo({ id, title, project });
     this.todos.push(todo);
   }
 
@@ -45,5 +56,13 @@ export default class TodoList {
 
   filterByProject(project) {
     return this.todos.filter((todo) => todo.project === project);
+  }
+
+  /**
+   * Converts this model into a simple object for
+   * JSON serialization
+   */
+  toJSON() {
+    return this.todos;
   }
 }

@@ -26,11 +26,6 @@ const App = (TodoList) => {
   const $menuBtn = document.querySelector('#menuBtn');
   const $closeMenu = document.querySelector('#closeMenu');
 
-  TodoList.addTodo(nanoid(10), 'New 1', 'new');
-  TodoList.addTodo(nanoid(10), 'New 2', 'new');
-  TodoList.addTodo(nanoid(10), 'Sport 1', projects.sports);
-  TodoList.addTodo(nanoid(10), 'Study 1', projects.study);
-
   // Selected project
   let selected = projects.all;
 
@@ -40,7 +35,12 @@ const App = (TodoList) => {
     ).length;
   }
 
-  // Render projects menu
+  /** Save to localStorage */
+  const save = () => {
+    localStorage.setItem('todos', JSON.stringify(TodoList));
+  };
+
+  /** Render projects menu */
   function renderProjects() {
     // console.log(TodoList.projects);
 
@@ -92,7 +92,7 @@ const App = (TodoList) => {
     $input.focus();
   }
 
-  // Render App
+  /** Render App */
   function render() {
     renderProjects();
 
@@ -142,6 +142,7 @@ const App = (TodoList) => {
     // Assign project property to null
     const project = selected === projects.all ? null : selected;
     TodoList.addTodo(nanoid(10), value, project);
+    save();
 
     $input.value = '';
     render();
@@ -154,12 +155,14 @@ const App = (TodoList) => {
 
     const { id } = e.target.parentElement.dataset;
     TodoList.removeTodo(id);
+    save();
     render();
   }
 
   function handleToggleTodo(e) {
     const { id } = e.target.closest('li').dataset;
     TodoList.toggleTodo(id);
+    save();
     render();
   }
 
@@ -172,6 +175,7 @@ const App = (TodoList) => {
 
     // Add project and select last project
     TodoList.addProject(value);
+    save();
     selected = value;
     $addProjectInput.value = '';
     render();
