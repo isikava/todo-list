@@ -149,18 +149,18 @@ const App = (TodoList) => {
   }
 
   function handleDeleteTodo(e) {
-    if (!e.target.closest('.delete')) {
+    if (!e.target.closest('[data-delete]')) {
       return;
     }
 
-    const { id } = e.target.parentElement.dataset;
+    const { id } = e.target.closest('.todo-item').dataset;
     TodoList.removeTodo(id);
     save();
     render();
   }
 
   function handleToggleTodo(e) {
-    const { id } = e.target.closest('li').dataset;
+    const { id } = e.target.closest('.todo-item').dataset;
     TodoList.toggleTodo(id);
     save();
     render();

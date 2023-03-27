@@ -85,13 +85,8 @@ p {
   grid-template-columns: 1fr;
 }
 
-.wrapper {
+.flex {
   display: flex;
-}
-
-.container {
-  max-width: 1200px;
-  padding-inline: 16px;
 }
 
 .header {
@@ -136,21 +131,9 @@ p {
   padding-top: 50px;
 }
 
-sl-button.delete {
-  &::part(base) {
-    font-size: 20px;
-    --sl-input-height-medium: 50px;
-  }
-  &::part(label) {
-    padding: 0 20px;
-  }
-  sl-icon {
-    pointer-events: none;
-  }
-}
-
 .todos-pane {
   flex: 1;
+  padding-inline: 16px;
   padding-bottom: 20px;
 }
 
@@ -158,38 +141,30 @@ sl-button.delete {
   display: flex;
   flex-direction: column;
   gap: var(--sl-spacing-x-small);
+}
 
-  li {
+.todo-item {
+  display: flex;
+
+  &:last-of-type {
+    margin-bottom: 15px;
+  }
+
+  .todo-checkbox {
     display: flex;
     align-items: center;
-    max-width: 700px;
-    gap: 16px;
-    gap: var(--sl-spacing-small);
-
-    &:last-of-type {
-      margin-bottom: 15px;
-    }
-
-    &:hover {
-      .delete {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  sl-checkbox {
-    &::part(label) {
-      max-width: 450px;
-      overflow-wrap: break-word;
-    }
-  }
-
-  .delete {
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.1s ease-out;
+  .todo-controls {
+    display: flex;
+    align-items: flex-start;
     margin-left: auto;
+  }
+
+  .due-date {
+    font-size: 0.7rem;
   }
 }
 
@@ -261,7 +236,7 @@ sl-badge[data-project='Groceries'] {
     font-size: 30px;
   }
 
-  .container {
+  .todos-pane {
     padding-inline: 38px;
   }
 
@@ -291,9 +266,12 @@ sl-badge[data-project='Groceries'] {
     padding-left: 100px;
   }
 
+  .todos-pane {
+    max-width: 800px;
+  }
+
   .addtodo-form {
     display: flex;
-    max-width: 700px;
     gap: 10px;
 
     sl-input {
@@ -302,6 +280,21 @@ sl-badge[data-project='Groceries'] {
 
     sl-button {
       display: block;
+    }
+  }
+
+  .todo-item {
+    .todo-controls {
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.1s ease-out;
+    }
+
+    &:hover {
+      .todo-controls {
+        visibility: visible;
+        opacity: 1;
+      }
     }
   }
 }

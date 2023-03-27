@@ -39,30 +39,30 @@ export function createMenuItem(title, selected, count) {
   return item;
 }
 
-export function createTodoItem(title, complete, project) {
-  const li = createElement('li');
+export function createTodoItem(title, complete, project, dueDate) {
+  const li = createElement('li', 'todo-item');
 
-  const checkbox = createElement('sl-checkbox');
-  checkbox.checked = complete;
-  checkbox.textContent = title;
+  const html = /*html*/ `
+    <div class="todo-checkbox">
+      <sl-checkbox ${complete ? 'checked' : ''} >${title}</sl-checkbox>
+      ${
+        project
+          ? `<sl-badge slot="suffix" data-project="${project}" pill>${project}</sl-badge>`
+          : ''
+      }
+      ${
+        dueDate
+          ? `<span class="due-date">Due <span data-due>${dueDate}</span></span>`
+          : ''
+      }      
+    </div>
+    <div class="todo-controls">
+      <sl-icon-button name="pencil-square" label="Edit"></sl-icon-button>
+      <sl-icon-button name="x-lg" label="Delete" data-delete></sl-icon-button>
+    </div>
+  `;
 
-  li.append(checkbox);
-
-  // Add badge
-  if (project) {
-    li.insertAdjacentHTML(
-      'beforeend',
-      `<sl-badge slot="suffix" data-project="${project}" pill>${project}</sl-badge>`
-    );
-  }
-
-  // Delete button
-  li.insertAdjacentHTML(
-    'beforeend',
-    `<sl-button class="delete">
-       <sl-icon name="x-lg" label="Delete"></sl-icon>
-     </sl-button>`
-  );
+  li.innerHTML = html;
 
   return li;
 }

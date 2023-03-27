@@ -38,7 +38,7 @@
       <header class="header">
         <sl-icon-button id="menuBtn" name="list" label="Menu"></sl-icon-button>
       </header>
-      <div class="wrapper">
+      <div class="flex">
         <div class="menu active-menu">
           <div class="menu-inner">
             <sl-icon-button
@@ -76,7 +76,7 @@
           </div>
         </div>
 
-        <main id="todosPane" class="container todos-pane">
+        <main id="todosPane" class="todos-pane">
           <h1>All Tasks</h1>
           <form id="addTodoForm" class="addtodo-form">
             <sl-input
@@ -90,25 +90,54 @@
           </form>
 
           <ul id="todos" class="todos">
-            <li>
-              <sl-checkbox checked>Buy Bananas for the pancakes</sl-checkbox
-              ><sl-badge variant="success" pill>Groceries</sl-badge>
+            <li class="todo-item">
+              <div class="todo-checkbox">
+                <sl-checkbox checked>Buy Bananas for the pancakes</sl-checkbox>
+                <sl-badge variant="success" pill>Groceries</sl-badge>
+                <span class="due-date"
+                  >Due <span data-due>23.3.2023</span></span
+                >
+              </div>
+              <div class="todo-controls">
+                <sl-icon-button
+                  name="pencil-square"
+                  label="Edit"
+                ></sl-icon-button>
+                <sl-icon-button name="x-lg" label="Delete"></sl-icon-button>
+              </div>
             </li>
-            <li>
-              <sl-checkbox checked>Go to the Gym</sl-checkbox
-              ><sl-badge variant="neutral" pill>Sports</sl-badge>
+            <li class="todo-item">
+              <div class="todo-checkbox">
+                <sl-checkbox checked>Go to the Gym</sl-checkbox
+                ><sl-badge variant="neutral" pill>Sports</sl-badge>
+                <span class="due-date"
+                  >Due <span data-due>23.3.2023</span></span
+                >
+              </div>
+              <div class="todo-controls">
+                <sl-icon-button
+                  name="pencil-square"
+                  label="Edit"
+                ></sl-icon-button>
+                <sl-icon-button name="x-lg" label="Delete"></sl-icon-button>
+              </div>
             </li>
-            <li>
-              <sl-checkbox>Prepare roadmap for MVP</sl-checkbox
-              ><sl-badge variant="primary" pill>Work</sl-badge>
-            </li>
-            <li>
-              <sl-checkbox>Read chapter 3 from Math book</sl-checkbox
-              ><sl-badge variant="warning" pill>Study</sl-badge>
-            </li>
-            <li>
-              <sl-checkbox>Call Peter</sl-checkbox
-              ><sl-badge variant="primary" pill>Work</sl-badge>
+            <li class="todo-item">
+              <div class="todo-checkbox">
+                <sl-checkbox
+                  >Prepare roadmap for MVP Prepare roadmap for MVP </sl-checkbox
+                ><sl-badge variant="primary" pill>Work</sl-badge>
+                <span class="due-date"
+                  >Due <span data-due>23.3.2023</span></span
+                >
+              </div>
+              <div class="todo-controls">
+                <sl-icon-button
+                  name="pencil-square"
+                  label="Edit"
+                ></sl-icon-button>
+                <sl-icon-button name="x-lg" label="Delete"></sl-icon-button>
+              </div>
             </li>
           </ul>
         </main>
