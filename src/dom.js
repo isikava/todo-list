@@ -66,11 +66,3 @@ export function createTodoItem(title, complete, project, dueDate) {
 
   return li;
 }
-
-export function createTodoCount(count) {
-  const p = createElement('p');
-  const todoString = count === 1 ? 'task' : 'tasks';
-  p.innerText = `${count} ${todoString} remaining`;
-
-  return p;
-}

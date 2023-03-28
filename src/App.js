@@ -22,9 +22,10 @@ const App = (TodoList) => {
   const $input = qs('#addTodo');
   const $addProjectForm = qs('#addProjectForm');
   const $addProjectInput = qs('#addProject');
-  const $menu = document.querySelector('.menu');
-  const $menuBtn = document.querySelector('#menuBtn');
-  const $closeMenu = document.querySelector('#closeMenu');
+  const $menu = qs('.menu');
+  const $menuBtn = qs('#menuBtn');
+  const $closeMenu = qs('#closeMenu');
+  const $todosMsg = qs('#todosMessage');
 
   // Selected project
   let selected = projects.all;
@@ -63,10 +64,10 @@ const App = (TodoList) => {
     $todos.innerHTML = '';
 
     // Show default message
+    $todosMsg.classList.add('hidden');
     if (todos.length === 0) {
-      const p = createElement('p');
-      p.textContent = 'Nothing to do! Add a task?';
-      $todos.append(p);
+      $todosMsg.textContent = 'Nothing to do! Add a task?';
+      $todosMsg.classList.remove('hidden');
       return;
     }
 
@@ -83,11 +84,6 @@ const App = (TodoList) => {
       // Append nodes to the todo list
       $todos.append(li);
     });
-
-    // Add todos count
-    const incompleteTodosCount = todos.filter((todo) => !todo.complete).length;
-    const count = createTodoCount(incompleteTodosCount);
-    $todos.append(count);
 
     $input.focus();
   }
@@ -161,9 +157,11 @@ const App = (TodoList) => {
 
   function handleToggleTodo(e) {
     const { id } = e.target.closest('.todo-item').dataset;
-    TodoList.toggleTodo(id);
+    const todo = TodoList.find(id);
+    todo.complete = e.target.checked;
     save();
-    render();
+    // Update task count
+    renderProjects();
   }
 
   function handleAddProject(e) {

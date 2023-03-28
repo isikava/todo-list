@@ -120,6 +120,12 @@ p {
       opacity: 1;
     }
   }
+
+  sl-menu-item {
+    sl-badge {
+      pointer-events: none;
+    }
+  }
 }
 
 .menu.active-menu {
@@ -237,6 +243,7 @@ sl-badge[data-project='Groceries'] {
   }
 
   .todos-pane {
+    max-width: 800px;
     padding-inline: 38px;
   }
 
@@ -266,10 +273,6 @@ sl-badge[data-project='Groceries'] {
     padding-left: 100px;
   }
 
-  .todos-pane {
-    max-width: 800px;
-  }
-
   .addtodo-form {
     display: flex;
     gap: 10px;
@@ -290,11 +293,9 @@ sl-badge[data-project='Groceries'] {
       transition: 0.1s ease-out;
     }
 
-    &:hover {
-      .todo-controls {
-        visibility: visible;
-        opacity: 1;
-      }
+    &:hover .todo-controls {
+      visibility: visible;
+      opacity: 1;
     }
   }
 }
