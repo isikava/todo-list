@@ -1,11 +1,5 @@
 import { nanoid } from 'nanoid';
-import {
-  qs,
-  createElement,
-  createMenuItem,
-  createTodoItem,
-  createTodoCount,
-} from './dom';
+import { qs, createElement, createMenuItem, createTodoItem } from './dom';
 
 const projects = {
   all: 'All Tasks',
@@ -26,6 +20,14 @@ const App = (TodoList) => {
   const $menuBtn = qs('#menuBtn');
   const $closeMenu = qs('#closeMenu');
   const $todosMsg = qs('#todosMessage');
+  const $drawer = qs('.drawer');
+  $drawer.show();
+
+  const $saveEditBtn = qs('sl-button[value="save"]', $drawer);
+  const $editForm = qs('#editForm', $drawer);
+  const $titleInput = qs('sl-input[name="title"]', $editForm);
+  const $projectInput = qs('sl-input[name="project"]', $editForm);
+  const $dueDateInput = qs('sl-input[name="dueDate"]', $editForm);
 
   // Selected project
   let selected = projects.all;
@@ -135,8 +137,8 @@ const App = (TodoList) => {
     }
 
     // If selected tab is All Tasks
-    // Assign project property to null
-    const project = selected === projects.all ? null : selected;
+    // Assign project property to empty string
+    const project = selected === projects.all ? '' : selected;
     TodoList.addTodo(nanoid(10), value, project);
     save();
 
@@ -145,14 +147,58 @@ const App = (TodoList) => {
   }
 
   function handleDeleteTodo(e) {
-    if (!e.target.closest('[data-delete]')) {
+    if (!e.target.matches('[data-delete]')) {
       return;
     }
 
-    const { id } = e.target.closest('.todo-item').dataset;
+    const $todoItem = e.target.closest('.todo-item');
+    const { id } = $todoItem.dataset;
+    $todoItem.remove();
     TodoList.removeTodo(id);
     save();
+    // Update task count
+    renderProjects();
+  }
+
+  function editTodo(id) {
+    console.log('editTodo');
+    const data = new FormData($editForm);
+    const newTodo = Object.fromEntries(data);
+    console.log(newTodo);
+
+    TodoList.editTodo(id, newTodo);
+    save();
     render();
+    console.log(TodoList);
+    // Close drawer
+    $drawer.hide();
+  }
+
+  // On todo edit click
+  function handleEditTodo(e) {
+    if (!e.target.matches('[data-edit]')) {
+      return;
+    }
+
+    // Open drawer
+    $drawer.show();
+
+    // Get current todo values
+    const $todoItem = e.target.closest('.todo-item');
+    const { id } = $todoItem.dataset;
+
+    const todo = TodoList.find(id);
+    const { title, project, dueDate } = todo;
+    console.log(todo);
+
+    // populate drawer inputs with todo data
+    $titleInput.value = title;
+    $projectInput.value = project;
+    $dueDateInput.value = dueDate;
+
+    // On click Save button
+    // update model with new data
+    $saveEditBtn.onclick = () => editTodo(id);
   }
 
   function handleToggleTodo(e) {
@@ -198,6 +244,7 @@ const App = (TodoList) => {
   $menuList.addEventListener('click', handleMenuChange);
   $form.addEventListener('submit', handleAddTodo);
   $todos.addEventListener('click', handleDeleteTodo);
+  $todos.addEventListener('click', handleEditTodo);
   $todos.addEventListener('sl-change', handleToggleTodo);
   $addProjectForm.addEventListener('submit', handleAddProject);
 

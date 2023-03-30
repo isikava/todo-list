@@ -99,7 +99,7 @@ p {
   position: fixed;
   height: calc(100% - 60px);
   width: 0;
-  z-index: 1000;
+  z-index: 10;
   top: 60px;
   left: 0;
   background-color: #fff;
@@ -234,6 +234,17 @@ sl-badge[data-project='Groceries'] {
     sl-icon {
       margin: 0;
     }
+  }
+}
+
+.drawer {
+  --size: 450px;
+  --header-spacing: var(--sl-spacing-medium);
+  --body-spacing: var(--sl-spacing-medium);
+  --footer-spacing: var(--sl-spacing-medium);
+
+  sl-input {
+    margin-bottom: 15px;
   }
 }
 

@@ -12,11 +12,7 @@ export default class TodoList {
 
     this.projects = this.todos.reduce(
       (values, todo) => {
-        if (
-          !values.includes(todo.project) &&
-          todo.project !== null &&
-          todo.project !== undefined
-        ) {
+        if (todo.project && !values.includes(todo.project)) {
           values.push(todo.project);
         }
         return values;
@@ -45,9 +41,10 @@ export default class TodoList {
     this.todos = this.todos.filter((todo) => todo.id !== id);
   }
 
-  toggleTodo(id) {
-    const todo = this.find(id);
-    todo.toggleComplete();
+  editTodo(id, newTodo) {
+    this.todos = this.todos.map((todo) =>
+      todo.id === id ? new Todo({ ...todo, ...newTodo }) : todo
+    );
   }
 
   removeCompleted() {

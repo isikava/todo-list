@@ -143,6 +143,22 @@
           <p id="todosMessage" class="todos-message">
             Nothing to do! Add a task?
           </p>
+
+          <sl-drawer label="Edit Todo" class="drawer">
+            <form id="editForm">
+              <sl-input autofocus label="Title" name="title"></sl-input>
+              <sl-input label="Project" name="project"></sl-input>
+              <sl-input
+                label="Due"
+                type="date"
+                placeholder="Date"
+                name="dueDate"
+              ></sl-input>
+            </form>
+            <sl-button slot="footer" variant="primary" value="save"
+              >Save</sl-button
+            >
+          </sl-drawer>
         </main>
       </div>
     </div>

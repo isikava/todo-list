@@ -44,7 +44,7 @@ export function createTodoItem(title, complete, project, dueDate) {
 
   const html = /*html*/ `
     <div class="todo-checkbox">
-      <sl-checkbox ${complete ? 'checked' : ''} >${title}</sl-checkbox>
+      <sl-checkbox ${complete && 'checked'} >${title}</sl-checkbox>
       ${
         project
           ? `<sl-badge slot="suffix" data-project="${project}" pill>${project}</sl-badge>`
@@ -57,7 +57,7 @@ export function createTodoItem(title, complete, project, dueDate) {
       }      
     </div>
     <div class="todo-controls">
-      <sl-icon-button name="pencil-square" label="Edit"></sl-icon-button>
+      <sl-icon-button name="pencil-square" label="Edit" data-edit></sl-icon-button>
       <sl-icon-button name="x-lg" label="Delete" data-delete></sl-icon-button>
     </div>
   `;

@@ -5,9 +5,4 @@ export default class Todo {
     this.project = project;
     this.complete = complete;
   }
-
-  toggleComplete() {
-    this.complete = !this.complete;
-    return this.complete;
-  }
 }
