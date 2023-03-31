@@ -1,12 +1,13 @@
 import { nanoid } from 'nanoid';
 import { qs, createElement, createMenuItem, createTodoItem } from './dom';
 
-const projects = {
-  all: 'All Tasks',
-};
-
 const App = (TodoList) => {
+  /* Menu */
+  const $menu = qs('.menu');
   const $menuList = qs('#menuList');
+  const $menuBtn = qs('#menuBtn');
+  const $closeMenu = qs('#closeMenu');
+  /* Todo List */
   const $todosPane = qs('#todosPane');
   const $todos = qs('#todos');
   const $h1 = qs('h1', $todosPane);
@@ -14,19 +15,18 @@ const App = (TodoList) => {
   const $input = qs('#addTodo');
   const $addProjectForm = qs('#addProjectForm');
   const $addProjectInput = qs('#addProject');
-  const $menu = qs('.menu');
-  const $menuBtn = qs('#menuBtn');
-  const $closeMenu = qs('#closeMenu');
   const $todosMsg = qs('#todosMessage');
+  /* Edit Drawer */
   const $drawer = qs('.drawer');
-  $drawer.show();
-
   const $saveEditBtn = qs('sl-button[value="save"]', $drawer);
   const $editForm = qs('#editForm', $drawer);
   const $titleInput = qs('sl-input[name="title"]', $editForm);
   const $projectSelect = qs('sl-select[name="project"]', $editForm);
   const $dueDateInput = qs('sl-input[name="dueDate"]', $editForm);
 
+  const projects = {
+    all: 'All Tasks',
+  };
   // Selected project
   let selected = projects.all;
 
@@ -80,12 +80,12 @@ const App = (TodoList) => {
 
     // Create todo item nodes for each todo in state
     todos.forEach((todo) => {
-      const { id, title, project, complete } = todo;
+      const { id, project } = todo;
 
       // Add badge if selected All Tasks
       const selectedProject = selected === projects.all ? project : null;
 
-      const li = createTodoItem(title, complete, selectedProject);
+      const li = createTodoItem({ ...todo, project: selectedProject });
       li.dataset.id = id;
 
       // Append nodes to the todo list
@@ -141,14 +141,16 @@ const App = (TodoList) => {
       return;
     }
 
+    const dueDate = Date.now();
+
     // If selected tab is All Tasks
     // Assign project property to empty string
     const project = selected === projects.all ? '' : selected;
-    TodoList.addTodo(nanoid(10), value, project);
+    const todo = { id: nanoid(10), title: value, project };
+    TodoList.addTodo(todo);
     save();
-
-    $input.value = '';
     render();
+    $input.value = '';
   }
 
   function handleDeleteTodo(e) {
@@ -189,19 +191,19 @@ const App = (TodoList) => {
     // Open drawer
     $drawer.show();
 
-    // Get current todo values
-    const $todoItem = e.target.closest('.todo-item');
-    const { id } = $todoItem.dataset;
-
-    const todo = TodoList.find(id);
-    const { title, project, dueDate } = todo;
-
     // Add select project options to form
     const options = TodoList.projects
       .map((project) => `<sl-option value="${project}">${project}</sl-option>`)
       .join('');
 
     $projectSelect.innerHTML = options;
+
+    // Get current todo values
+    const $todoItem = e.target.closest('.todo-item');
+    const { id } = $todoItem.dataset;
+
+    const todo = TodoList.find(id);
+    const { title, project, dueDate } = todo;
 
     // Populate drawer form inputs with todo data
     $titleInput.value = title;

@@ -26,10 +26,10 @@ export default class TodoList {
     this.projects.push(title);
   }
 
-  addTodo(id, title, project) {
-    if (!title) return;
+  addTodo(task) {
+    if (!task) return;
 
-    const todo = new Todo({ id, title, project });
+    const todo = new Todo(task);
     this.todos.push(todo);
   }
 

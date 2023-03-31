@@ -90,6 +90,8 @@ p {
 }
 
 .header {
+  display: flex;
+
   sl-icon-button {
     font-size: 1.5rem;
   }
@@ -102,7 +104,7 @@ p {
   z-index: 10;
   top: 60px;
   left: 0;
-  background-color: #fff;
+  background-color: var(--sl-color-neutral-0);
   overflow-x: hidden;
   transition: width 0.5s;
 
@@ -151,6 +153,7 @@ p {
 
 .todo-item {
   display: flex;
+  justify-content: space-between;
 
   &:last-of-type {
     margin-bottom: 15px;
@@ -166,11 +169,11 @@ p {
   .todo-controls {
     display: flex;
     align-items: flex-start;
-    margin-left: auto;
   }
 
   .due-date {
     font-size: 0.7rem;
+    color: var(--sl-color-neutral-600);
   }
 }
 
@@ -243,7 +246,8 @@ sl-badge[data-project='Groceries'] {
   --body-spacing: var(--sl-spacing-medium);
   --footer-spacing: var(--sl-spacing-medium);
 
-  sl-input {
+  sl-input,
+  sl-select {
     margin-bottom: 15px;
   }
 }
@@ -259,7 +263,7 @@ sl-badge[data-project='Groceries'] {
   }
 
   .header {
-    padding-left: 16px;
+    padding: 0 16px;
   }
 
   .menu {

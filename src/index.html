@@ -95,8 +95,14 @@
                 <sl-checkbox checked>Buy Bananas for the pancakes</sl-checkbox>
                 <sl-badge variant="success" pill>Groceries</sl-badge>
                 <span class="due-date"
-                  >Due <span data-due>23.3.2023</span></span
-                >
+                  >Due
+                  <sl-format-date
+                    month="long"
+                    day="numeric"
+                    year="numeric"
+                  ></sl-format-date
+                  ><br
+                /></span>
               </div>
               <div class="todo-controls">
                 <sl-icon-button
@@ -144,7 +150,7 @@
             Nothing to do! Add a task?
           </p>
 
-          <sl-drawer open label="Edit Todo" class="drawer">
+          <sl-drawer label="Edit Todo" class="drawer">
             <form id="editForm">
               <sl-input
                 autofocus

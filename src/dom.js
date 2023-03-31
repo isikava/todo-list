@@ -39,7 +39,7 @@ export function createMenuItem(title, selected, count) {
   return item;
 }
 
-export function createTodoItem(title, complete, project, dueDate) {
+export function createTodoItem({ title, complete, project, dueDate }) {
   const li = createElement('li', 'todo-item');
 
   const html = /*html*/ `
@@ -52,7 +52,14 @@ export function createTodoItem(title, complete, project, dueDate) {
       }
       ${
         dueDate
-          ? `<span class="due-date">Due <span data-due>${dueDate}</span></span>`
+          ? `<span class="due-date">Due 
+              <sl-format-date
+                weekday="short"
+                month="long" 
+                day="numeric"
+                date=${dueDate}
+              ></sl-format-date
+              </span>`
           : ''
       }      
     </div>
