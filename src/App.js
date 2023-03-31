@@ -3,8 +3,6 @@ import { qs, createElement, createMenuItem, createTodoItem } from './dom';
 
 const projects = {
   all: 'All Tasks',
-  sports: 'Sports',
-  study: 'Study',
 };
 
 const App = (TodoList) => {
@@ -32,7 +30,7 @@ const App = (TodoList) => {
   // Selected project
   let selected = projects.all;
 
-  function countCompleteByProject(project) {
+  function countIncompleteByProject(project) {
     return TodoList.todos.filter(
       (todo) => todo.project === project && !todo.complete
     ).length;
@@ -50,15 +48,22 @@ const App = (TodoList) => {
     // Delete all nodes
     $menuList.innerHTML = '';
 
+    // Add All Tasks tab
+    const $allTasksMenu = createMenuItem(projects.all, selected);
+    $allTasksMenu.dataset.projectId = projects.all;
+    $menuList.append($allTasksMenu);
+
     // Create menu item for each project
     TodoList.projects.forEach((project) => {
-      const count = countCompleteByProject(project);
+      // Add count of incomplete todos
+      const count = countIncompleteByProject(project);
       const item = createMenuItem(project, selected, count);
       item.dataset.projectId = project;
       $menuList.append(item);
     });
   }
 
+  /** Render Todo List */
   function renderTodos(todos = []) {
     // console.log(TodoList.todos);
 
@@ -161,15 +166,16 @@ const App = (TodoList) => {
   }
 
   function editTodo(id) {
-    console.log('editTodo');
+    // Get data from drawer form
     const data = new FormData($editForm);
     const newTodo = Object.fromEntries(data);
-    console.log(newTodo);
+    if (newTodo.title.trim() === '') {
+      return;
+    }
 
     TodoList.editTodo(id, newTodo);
     save();
     render();
-    console.log(TodoList);
     // Close drawer
     $drawer.hide();
   }
@@ -189,15 +195,15 @@ const App = (TodoList) => {
 
     const todo = TodoList.find(id);
     const { title, project, dueDate } = todo;
-    console.log(todo);
 
-    const $options = TodoList.projects
+    // Add select project options to form
+    const options = TodoList.projects
       .map((project) => `<sl-option value="${project}">${project}</sl-option>`)
       .join('');
 
-    $projectSelect.innerHTML = $options;
+    $projectSelect.innerHTML = options;
 
-    // populate drawer inputs with todo data
+    // Populate drawer form inputs with todo data
     $titleInput.value = title;
     $projectSelect.value = project;
     $dueDateInput.value = dueDate;

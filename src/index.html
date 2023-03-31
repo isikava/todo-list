@@ -146,7 +146,13 @@
 
           <sl-drawer open label="Edit Todo" class="drawer">
             <form id="editForm">
-              <sl-input autofocus label="Title" name="title"></sl-input>
+              <sl-input
+                autofocus
+                label="Title"
+                name="title"
+                required
+                aria-required="true"
+              ></sl-input>
               <sl-select
                 clearable
                 label="Project"

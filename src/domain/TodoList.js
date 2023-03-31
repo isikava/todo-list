@@ -18,7 +18,7 @@ export default class TodoList {
         return values;
       },
       // Default projects can not be deleted
-      ['All Tasks', 'Work', 'Study', 'Sports', 'Groceries']
+      ['Work', 'Study', 'Sports', 'Groceries']
     );
   }
 
