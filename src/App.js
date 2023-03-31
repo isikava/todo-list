@@ -26,7 +26,7 @@ const App = (TodoList) => {
   const $saveEditBtn = qs('sl-button[value="save"]', $drawer);
   const $editForm = qs('#editForm', $drawer);
   const $titleInput = qs('sl-input[name="title"]', $editForm);
-  const $projectInput = qs('sl-input[name="project"]', $editForm);
+  const $projectSelect = qs('sl-select[name="project"]', $editForm);
   const $dueDateInput = qs('sl-input[name="dueDate"]', $editForm);
 
   // Selected project
@@ -156,7 +156,7 @@ const App = (TodoList) => {
     $todoItem.remove();
     TodoList.removeTodo(id);
     save();
-    // Update task count
+    // Update task count view
     renderProjects();
   }
 
@@ -191,9 +191,15 @@ const App = (TodoList) => {
     const { title, project, dueDate } = todo;
     console.log(todo);
 
+    const $options = TodoList.projects
+      .map((project) => `<sl-option value="${project}">${project}</sl-option>`)
+      .join('');
+
+    $projectSelect.innerHTML = $options;
+
     // populate drawer inputs with todo data
     $titleInput.value = title;
-    $projectInput.value = project;
+    $projectSelect.value = project;
     $dueDateInput.value = dueDate;
 
     // On click Save button
@@ -206,7 +212,7 @@ const App = (TodoList) => {
     const todo = TodoList.find(id);
     todo.complete = e.target.checked;
     save();
-    // Update task count
+    // Update task count view
     renderProjects();
   }
 

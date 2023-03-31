@@ -144,10 +144,19 @@
             Nothing to do! Add a task?
           </p>
 
-          <sl-drawer label="Edit Todo" class="drawer">
+          <sl-drawer open label="Edit Todo" class="drawer">
             <form id="editForm">
               <sl-input autofocus label="Title" name="title"></sl-input>
-              <sl-input label="Project" name="project"></sl-input>
+              <sl-select
+                clearable
+                label="Project"
+                name="project"
+                value="Sports"
+              >
+                <sl-option value="Sports">Sports</sl-option>
+                <sl-option value="Study">Study</sl-option>
+                <sl-option value="Work">Work</sl-option>
+              </sl-select>
               <sl-input
                 label="Due"
                 type="date"
