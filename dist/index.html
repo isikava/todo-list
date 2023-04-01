@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/dark.css"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/shoelace.js"
+      defer
+    ></script>
+    <style>
+      body {
+        opacity: 0;
+      }
+
+      body.ready {
+        opacity: 1;
+        transition: 0.25s opacity;
+      }
+    </style>
+  <script defer src="main.js"></script></head>
+  <body>
+    <div id="root" class="grid">
+      <header class="header">
+        <sl-icon-button id="menuBtn" name="list" label="Menu"></sl-icon-button>
+        <sl-switch id="theme" size="small">
+          <sl-icon name="sun" style="color: #eab308"></sl-icon>
+        </sl-switch>
+      </header>
+      <div class="flex">
+        <div class="menu active-menu">
+          <div class="menu-inner">
+            <sl-icon-button
+              id="closeMenu"
+              class="close-menu"
+              name="x-lg"
+              label="Close"
+            ></sl-icon-button>
+            <div id="menuList" class="menu-list">
+              <sl-menu-item><strong>All Tasks</strong></sl-menu-item>
+              <sl-menu-item>Favorites</sl-menu-item>
+              <sl-menu-item>Groceries</sl-menu-item>
+              <sl-menu-item>Work</sl-menu-item>
+              <sl-menu-item>Study</sl-menu-item>
+              <sl-menu-item>Sports</sl-menu-item>
+              <sl-menu-item
+                >Replies
+                <sl-badge slot="suffix" variant="neutral" pill
+                  >12</sl-badge
+                ></sl-menu-item
+              >
+            </div>
+            <form id="addProjectForm" class="addproject-form">
+              <sl-input
+                id="addProject"
+                placeholder="New category"
+                autocomplete="off"
+              >
+                <sl-icon name="plus-lg" slot="prefix"></sl-icon
+              ></sl-input>
+              <sl-button type="submit" variant="primary" class="hidden"
+                >Add</sl-button
+              >
+            </form>
+          </div>
+        </div>
+
+        <main id="todosPane" class="todos-pane">
+          <h1>All Tasks</h1>
+          <form id="addTodoForm" class="addtodo-form">
+            <sl-input
+              id="addTodo"
+              placeholder="Add a new task"
+              autocomplete="off"
+              filled
+              autofocus
+            ></sl-input>
+            <sl-button type="submit" variant="primary">Add</sl-button>
+          </form>
+
+          <ul id="todos" class="todos">
+            <li class="todo-item">
+              <div class="todo-checkbox">
+                <sl-checkbox checked>Buy Bananas for the pancakes</sl-checkbox>
+                <sl-badge variant="success" pill>Groceries</sl-badge>
+                <span class="due-date"
+                  >Due
+                  <sl-format-date
+                    month="long"
+                    day="numeric"
+                    year="numeric"
+                  ></sl-format-date
+                  ><br
+                /></span>
+              </div>
+              <div class="todo-controls">
+                <sl-icon-button
+                  name="pencil-square"
+                  label="Edit"
+                ></sl-icon-button>
+                <sl-icon-button name="x-lg" label="Delete"></sl-icon-button>
+              </div>
+            </li>
+            <li class="todo-item">
+              <div class="todo-checkbox">
+                <sl-checkbox checked>Go to the Gym</sl-checkbox
+                ><sl-badge variant="neutral" pill>Sports</sl-badge>
+                <span class="due-date"
+                  >Due <span data-due>23.3.2023</span></span
+                >
+              </div>
+              <div class="todo-controls">
+                <sl-icon-button
+                  name="pencil-square"
+                  label="Edit"
+                ></sl-icon-button>
+                <sl-icon-button name="x-lg" label="Delete"></sl-icon-button>
+              </div>
+            </li>
+            <li class="todo-item">
+              <div class="todo-checkbox">
+                <sl-checkbox
+                  >Prepare roadmap for MVP Prepare roadmap for MVP </sl-checkbox
+                ><sl-badge variant="primary" pill>Work</sl-badge>
+                <span class="due-date"
+                  >Due <span data-due>23.3.2023</span></span
+                >
+              </div>
+              <div class="todo-controls">
+                <sl-icon-button
+                  name="pencil-square"
+                  label="Edit"
+                ></sl-icon-button>
+                <sl-icon-button name="x-lg" label="Delete"></sl-icon-button>
+              </div>
+            </li>
+          </ul>
+          <p id="todosMessage" class="todos-message">
+            Nothing to do! Add a task?
+          </p>
+
+          <sl-drawer label="Edit Todo" class="drawer">
+            <form id="editForm">
+              <sl-input
+                autofocus
+                label="Title"
+                name="title"
+                required
+                aria-required="true"
+              ></sl-input>
+              <sl-select
+                clearable
+                label="Project"
+                name="project"
+                value="Sports"
+              >
+                <sl-option value="Sports">Sports</sl-option>
+                <sl-option value="Study">Study</sl-option>
+                <sl-option value="Work">Work</sl-option>
+              </sl-select>
+              <sl-input
+                label="Due"
+                type="date"
+                placeholder="Date"
+                name="dueDate"
+              ></sl-input>
+            </form>
+            <sl-button slot="footer" variant="primary" value="save"
+              >Save</sl-button
+            >
+          </sl-drawer>
+        </main>
+      </div>
+    </div>
+
+    <script type="module">
+      // Prevent FOUCE
+      await Promise.allSettled([
+        customElements.whenDefined('sl-button'),
+        customElements.whenDefined('sl-checkbox'),
+      ]);
+
+      // Custom elements are registered now!
+      // Add the `ready` class so the UI fades in.
+      document.body.classList.add('ready');
+    </script>
+  </body>
+</html>

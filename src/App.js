@@ -141,8 +141,6 @@ const App = (TodoList) => {
       return;
     }
 
-    const dueDate = Date.now();
-
     // If selected tab is All Tasks
     // Assign project property to empty string
     const project = selected === projects.all ? '' : selected;
