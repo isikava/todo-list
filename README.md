@@ -4,7 +4,7 @@
 
 ![](./docs/demo.gif)
 
-## [Live](https://alexign473.github.io/todo-list/)
+## [Live](https://isikava.github.io/todo-list/)
 
 A todo list app with local storage.  
 The main purpose of this project is to learn OOP and SOLID principles, which have been applied to some extent.  
